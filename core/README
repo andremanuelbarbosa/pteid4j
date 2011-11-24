@@ -1,0 +1,4 @@
+
+MAVEN
+
+> mvn install:install-file -DgroupId=pteidlibj -DartifactId=pteidlibj -Dversion=1.0 -Dfile=lib/pteidlibj.jar -Dpackaging=jar -DgeneratePom=true
