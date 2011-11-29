@@ -12,15 +12,38 @@
 	<artifactId>pteid4j-core</artifactId>
 	<description>Portuguese e-ID for Java Core</description>
 	<version>0.1.0-SNAPSHOT</version>
-	<packaging>pom</packaging>
+	<packaging>jar</packaging>
+	<url>http://www.cartaodecidadao.eu/</url>
 	<inceptionYear>2011</inceptionYear>
+
+	<scm>
+		<url>http://code.google.com/p/pteid4j/source/browse/</url>
+		<connection>scm:svn:http://pteid4j.googlecode.com/svn/trunk/core/</connection>
+		<developerConnection>scm:svn:https://pteid4j.googlecode.com/svn/trunk/core/</developerConnection>
+	</scm>
+
+	<issueManagement>
+		<system>Google Code</system>
+		<url>http://code.google.com/p/pteid4j/issues/list</url>
+	</issueManagement>
+
+	<ciManagement>
+		<system>Hudson</system>
+		<url>http://localhost:8080/hudson/job/PTeID4J%20Core/</url>
+	</ciManagement>
 
 	<developers>
 		<developer>
 			<name>Andre Barbosa</name>
 			<email>andremanuelbarbosa@gmail.com</email>
+			<url>http://www.andremanuelbarbosa.com/</url>
 		</developer>
 	</developers>
+
+	<organization>
+		<name>Universidade do Porto</name>
+		<url>http://www.up.pt/</url>
+	</organization>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -32,6 +55,12 @@
 			<artifactId>junit</artifactId>
 			<version>4.7</version>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.16</version>
 		</dependency>
 
 		<dependency>
