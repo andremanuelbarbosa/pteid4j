@@ -4,12 +4,12 @@
 	<parent>
 		<groupId>pt.up</groupId>
 		<artifactId>pteid4j</artifactId>
-		<version>0.1.0-SNAPSHOT</version>
+		<version>0.1.0</version>
 		<relativePath>../</relativePath>
 	</parent>
 	<name>PTeID4J Core</name>
 	<groupId>pt.up.pteid4j</groupId>
-	<artifactId>pteid4j-core</artifactId>
+	<artifactId>pteid4j</artifactId>
 	<description>Portuguese e-ID for Java Core</description>
 	<version>0.1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
