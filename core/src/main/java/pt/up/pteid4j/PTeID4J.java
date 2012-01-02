@@ -3,6 +3,7 @@ package pt.up.pteid4j;
 import org.apache.log4j.Logger;
 
 import pteidlib.PTEID_ADDR;
+import pteidlib.PTEID_ID;
 import pteidlib.PteidException;
 import pteidlib.pteid;
 
@@ -22,10 +23,10 @@ public final class PTeID4J {
     try {
 
       System.loadLibrary("pteidlibj");
-      
-      //System.loadLibrary("pteidpkcs11");
 
-      //System.load("/usr/local/lib/libpteidlib.dylib");
+      // System.loadLibrary("pteidpkcs11");
+
+      // System.load("/usr/local/lib/libpteidlib.dylib");
 
       pteid.Init("");
       pteid.SetSODChecking(false);
@@ -36,6 +37,10 @@ public final class PTeID4J {
     }
   }
 
+  /**
+   * Class Constructor
+   * 
+   */
   private PTeID4J() {
 
   }
@@ -45,8 +50,8 @@ public final class PTeID4J {
     return pteid.GetAddr();
   }
 
-  protected static String getOSName() {
+  protected static PTEID_ID getId() throws PteidException {
 
-    return System.getProperty("os.name");
+    return pteid.GetID();
   }
 }
