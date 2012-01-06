@@ -10,6 +10,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import pt.up.pteid4j.PTeID4JUtils;
+
 import sun.security.pkcs11.wrapper.PKCS11Exception;
 
 /**
@@ -44,14 +46,34 @@ public class PTeID4JPKCS11Test {
   }
 
   @Test
-  public void testInit() throws IOException, PKCS11Exception {
+  public void testSign() throws IOException, PKCS11Exception {
 
-    logger.info("Testing PTeID4JPKCS11.init()...");
+    logger.info("Testing PTeID4JPKCS11.sign()...");
 
-    PTeID4JPKCS11 pteid4jPKCS11 = new PTeID4JPKCS11();
-    Assert.assertNotNull(pteid4jPKCS11);
-    Assert.assertNotNull(pteid4jPKCS11.getPKCS11());
+    byte[] signature = PTeID4JPKCS11.getInstance().sign("PTeID4J".getBytes());
 
-    logger.info("Done Testing PTeID4JPKCS11.init().");
+    String signatureHex = "DFF1DDECA2E7ABB0231B286D05F76911C0D4F3C4547F90F86CF8CCEBCB4EC855AE8FE5165B32998F729A5A170E76C14C0ECCF7D9DF75DB1A8EDC2EB4EDBD262DBAC5EAB66C44B4129CA0BD3ED5C0004840FD4EA45BB4E40CEC0307D3DB12A5C1583338FFD42271D4134EB33B2CC01A49DB35981FEFFF28A2CFC9F59607820ED9";
+
+    Assert.assertNotNull(signature);
+
+    Assert.assertEquals(128, signature.length);
+    Assert.assertEquals(signatureHex, PTeID4JUtils.toHexString(signature));
+
+    logger.info("Done Testing PTeID4JPKCS11.sign().");
+  }
+
+  @Test
+  public void testValidate() throws IOException, PKCS11Exception {
+
+    logger.info("Testing PTeID4JPKCS11.validate()...");
+
+    byte[] signature = PTeID4JPKCS11.getInstance().sign("PTeID4J".getBytes());
+
+    Assert.assertNotNull(signature);
+    Assert.assertEquals(128, signature.length);
+
+    PTeID4JPKCS11.getInstance().validate("PTeID4J".getBytes(), signature);
+
+    logger.info("Done Testing PTeID4JPKCS11.validate().");
   }
 }

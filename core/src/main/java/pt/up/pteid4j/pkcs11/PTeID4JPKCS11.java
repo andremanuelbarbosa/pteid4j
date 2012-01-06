@@ -1,6 +1,5 @@
 package pt.up.pteid4j.pkcs11;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
@@ -22,6 +21,8 @@ public final class PTeID4JPKCS11 {
 
   private static Logger logger = Logger.getLogger(PTeID4JPKCS11.class);
 
+  private static PTeID4JPKCS11 instance;
+
   private long slotId;
 
   private PKCS11 pkcs11;
@@ -29,16 +30,22 @@ public final class PTeID4JPKCS11 {
   /**
    * Class Constructor
    * 
-   * @throws PKCS11Exception
-   * @throws IOException
    */
-  public PTeID4JPKCS11() throws IOException, PKCS11Exception {
+  private PTeID4JPKCS11() {
 
-    this.init();
+    try {
+      this.init();
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (PKCS11Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
   }
 
   /**
-   * Initializes the PTeID4J PKCS11
+   * Initializes the PTeID4J PKCS#11
    * 
    * @throws IOException
    * @throws PKCS11Exception
@@ -83,7 +90,7 @@ public final class PTeID4JPKCS11 {
 
     try {
 
-      this.pkcs11.C_FindObjectsInit(session, getPrivateCKAttributes("CITIZEN AUTHENTICATION KEY"));
+      this.pkcs11.C_FindObjectsInit(session, getCKAttributes(PKCS11Constants.CKO_PRIVATE_KEY, "CITIZEN AUTHENTICATION KEY"));
 
       long[] handles = this.pkcs11.C_FindObjects(session, 2);
 
@@ -104,31 +111,58 @@ public final class PTeID4JPKCS11 {
     }
   }
 
-  public PKCS11 getPKCS11() {
+  /**
+   * Returns the PTeID4J PKCS#11 Instance
+   * 
+   * @return the PTeID4J PKCS#11 Instance
+   */
+  public static PTeID4JPKCS11 getInstance() {
 
-    return this.pkcs11;
+    if ( instance == null ) {
+
+      instance = new PTeID4JPKCS11();
+    }
+
+    return instance;
   }
 
-  private static CK_ATTRIBUTE[] getPrivateCKAttributes(String name) {
+  /**
+   * 
+   * 
+   * @param ckaClass
+   * @param ckaLabel
+   * @return
+   */
+  private static CK_ATTRIBUTE[] getCKAttributes(long ckaClass, String ckaLabel) {
 
     CK_ATTRIBUTE[] attributes = new CK_ATTRIBUTE[2];
 
     attributes[0] = new CK_ATTRIBUTE();
     attributes[0].type = PKCS11Constants.CKA_CLASS;
-    attributes[0].pValue = PKCS11Constants.CKO_PRIVATE_KEY;
+    attributes[0].pValue = ckaClass;
 
     attributes[1] = new CK_ATTRIBUTE();
     attributes[1].type = PKCS11Constants.CKA_LABEL;
-    attributes[1].pValue = name;
+    attributes[1].pValue = ckaLabel;
 
     return attributes;
   }
+  
+  /*private static CK_MECHANISM getCKMechanism(long mechanism) {
+    
+    CK_MECHANISM ckMechanism = new CK_MECHANISM();
+    
+    mechanismCK.mechanism = mechanism;
+    mechanismCK.pParameter = null;
+    
+    return mechanismCK;
+  }*/
 
   private long getSignatureHandle(long session) throws PKCS11Exception {
 
     try {
 
-      this.pkcs11.C_FindObjectsInit(session, getPrivateCKAttributes("CITIZEN SIGNATURE KEY"));
+      this.pkcs11.C_FindObjectsInit(session, getCKAttributes(PKCS11Constants.CKO_PRIVATE_KEY, "CITIZEN SIGNATURE KEY"));
 
       long[] handles = this.pkcs11.C_FindObjects(session, 2);
 
@@ -149,26 +183,47 @@ public final class PTeID4JPKCS11 {
     }
   }
 
-  public byte[] sign(byte[] digest, byte[] digestInfoPrefix) throws IOException, PKCS11Exception {
+  public byte[] sign(byte[] digest) throws PKCS11Exception {
 
     long session = this.pkcs11.C_OpenSession(this.slotId, PKCS11Constants.CKF_SERIAL_SESSION, null, null);
 
     try {
 
       CK_MECHANISM mechanism = new CK_MECHANISM();
-      mechanism.mechanism = PKCS11Constants.CKM_RSA_PKCS;
+      mechanism.mechanism = PKCS11Constants.CKM_SHA1_RSA_PKCS;
       mechanism.pParameter = null;
       this.pkcs11.C_SignInit(session, mechanism, this.getSignatureHandle(session));
 
-      ByteArrayOutputStream digestInfo = new ByteArrayOutputStream();
-      digestInfo.write(digestInfoPrefix);
-      digestInfo.write(digest);
-
-      return pkcs11.C_Sign(session, digestInfo.toByteArray());
+      return this.pkcs11.C_Sign(session, digest);
 
     } finally {
 
-      pkcs11.C_CloseSession(session);
+      this.pkcs11.C_CloseSession(session);
+    }
+  }
+
+  public void validate(byte[] digest, byte[] signature) throws PKCS11Exception {
+
+    long session = this.pkcs11.C_OpenSession(this.slotId, PKCS11Constants.CKF_SERIAL_SESSION, null, null);
+
+    try {
+
+      this.pkcs11.C_FindObjectsInit(session, getCKAttributes(PKCS11Constants.CKO_PUBLIC_KEY, "CITIZEN SIGNATURE CERTIFICATE"));
+
+      long handle = this.pkcs11.C_FindObjects(session, 1)[0];
+
+      this.pkcs11.C_FindObjectsFinal(session);
+
+      CK_MECHANISM mechanism = new CK_MECHANISM();
+      mechanism.mechanism = PKCS11Constants.CKM_SHA1_RSA_PKCS;
+      mechanism.pParameter = null;
+      this.pkcs11.C_VerifyInit(session, mechanism, handle);
+
+      this.pkcs11.C_Verify(session, digest, signature);
+
+    } finally {
+
+      this.pkcs11.C_CloseSession(session);
     }
   }
 }

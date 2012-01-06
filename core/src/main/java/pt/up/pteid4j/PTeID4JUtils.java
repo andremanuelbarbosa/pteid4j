@@ -1,5 +1,10 @@
 package pt.up.pteid4j;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 /**
  * PTeID4J Utilities Abstract Class
  * 
@@ -17,6 +22,32 @@ public abstract class PTeID4JUtils {
   protected static String getOSName() {
 
     return System.getProperty("os.name");
+  }
+
+  /**
+   * Converts an Input Stream to an array of bytes
+   * 
+   * @param inputStream
+   *          the Input Stream
+   * @return the array of bytes from the Input Stream
+   * @throws IOException
+   *           if there is an error accessing the input stream
+   */
+  public static byte[] toByteArray(InputStream inputStream) throws IOException {
+
+    int read = -1;
+    byte[] buff = new byte[512];
+
+    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+    while ((read = inputStream.read(buff)) >= 0) {
+
+      byteArrayOutputStream.write(buff, 0, read);
+    }
+
+    byteArrayOutputStream.close();
+
+    return byteArrayOutputStream.toByteArray();
   }
 
   /**
@@ -44,5 +75,17 @@ public abstract class PTeID4JUtils {
     }
 
     return stringBuffer.toString();
+  }
+
+  /**
+   * Converts an array of bytes into an Input Stream
+   * 
+   * @param bytes
+   *          the array of bytes
+   * @return the Input Stream
+   */
+  public static InputStream toInputStream(byte[] bytes) {
+
+    return new ByteArrayInputStream(bytes);
   }
 }
