@@ -7,9 +7,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import pt.up.pteid4j.PTeID4J;
-import pteidlib.PteidException;
-
 /**
  * PTeID4J PDF Test Class
  * 
@@ -22,11 +19,13 @@ public class PTeID4JPDFTest {
   @BeforeClass
   public static void setUpBeforeClass() throws Exception {
 
+    logger.info("Testing PTeID4JPDF...");
   }
 
   @AfterClass
   public static void tearDownAfterClass() throws Exception {
 
+    logger.info("Done Testing PTeID4JPDF.");
   }
 
   @Before
@@ -40,8 +39,7 @@ public class PTeID4JPDFTest {
   }
 
   @Test
-  public void test() throws PteidException {
+  public void test() throws Exception {
 
-    logger.info(PTeID4J.getId().name);
   }
 }
