@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <title>Applet Test</title>
+    
+    <script>
+        function go()
+        {
+        	document.getElementById("NAME").value = applet.getName();
+        }
+      </script>
+  </head>
+  
+  <body>
+    <script src="http://www.java.com/js/deployJava.js"></script>
+    <script>
+        <!-- applet id can be used to get a reference to the applet object -->
+        var attributes = { id:'applet', code:'pt.up.pteid4j.id.applet.PTeID4JIDApplet',  width:1, height:1 } ;
+        var parameters = { jnlp_href: 'pteid4j-id-applet.jnlp' } ;
+        deployJava.runApplet(attributes, parameters, '1.6');
+    </script>
+    
+    <a href="javascript:go();">GO!!!</a>
+
+    <div>
+      <label>Name: </label><input id="NAME" type="text" size="75" />
+    </div>
+  </body>
+</html>

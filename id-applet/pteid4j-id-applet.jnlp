@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jnlp spec="1.0+" codebase="" href="">
+  <information>
+    <title>PTeID4J ID Applet - JavaScript to Java LiveConnect</title>
+    <vendor>Sun</vendor>
+  </information>
+  <resources>
+    <!-- Application Resources -->
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se" />
+    <jar href="target/pteid4j-id-applet-0.1.0-SNAPSHOT-jar-with-dependencies.jar" main="true" />
+  </resources>
+  <applet-desc name="PTeID4J ID Applet" 
+    main-class="pt.up.pteid4j.id.applet.PTeID4JIDApplet"
+    width="100"
+    height="100">
+  </applet-desc>
+  <update check="background" />
+</jnlp>

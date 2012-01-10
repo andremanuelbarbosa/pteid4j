@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <title>Applet Test</title>
+    
+    <script type="text/javascript">
+
+function exec( command ) {
+
+	/*var applet = "<object id='applet_id' name='applet_name' " +
+      "classid='java:pt.up.pteid4j.id.applet.PTeID4JIDApplet.class' type='application/x-java-applet' " +
+      "archive='target/pteid4j-id-applet-0.1.0-SNAPSHOT-jar-with-dependencies.jar' width='100' height='100'> " +
+      "<param name='archive' value='target/pteid4j-id-applet-0.1.0-SNAPSHOT-jar-with-dependencies.jar' /> " + 
+      "<param name='mayscript' value='true' /> " +
+      "<param name='command' value='" + command + "' /> " +
+    "</object>";*/
+	
+var applet = "<applet id='applet' name='applet' archive='target/pteid4j-id-applet-0.1.0-SNAPSHOT-jar-with-dependencies.jar' code='pt.up.pteid4j.id.applet.PTeID4JIDApplet.class' width='100' height='100' MAYSCRIPT ><param name='command' value='" + command + "' />Sorry, you need a Java-enabled browser.</applet>";
+
+        var body = document.getElementsByTagName("body")[0];
+        var div = document.createElement("div");
+        div.innerHTML = applet;
+        body.appendChild(div);
+        
+
+}
+
+</script>
+    
+  </head>
+  
+  <body>
+  
+    <!-- <object id="applet_id" name="applet_name"
+      classid="java:pt.up.pteid4j.id.applet.PTeID4JIDApplet.class" type="application/x-java-applet"
+      archive="target/pteid4j-id-applet-0.1.0-SNAPSHOT-jar-with-dependencies.jar" width="100" height="100">
+      <param name="archive" value="target/pteid4j-id-applet-0.1.0-SNAPSHOT-jar-with-dependencies.jar" /> 
+      <param name="mayscript" value="true" />
+    </object> -->
+    
+    <script>
+        function go()
+        {
+        	exec("getSurname()");
+        	//alert(document.applet_name.getSurname());
+        }
+      </script>
+      
+      <a href="javascript:go();">GO!!!</a>
+    
+    <!-- <applet code="pt.up.pteid4j.applet.PTeID4JApplet" arhive="target/pteid4j-applet-0.1.0-SNAPSHOT.jar"></applet> -->
+  </body>
+</html>
