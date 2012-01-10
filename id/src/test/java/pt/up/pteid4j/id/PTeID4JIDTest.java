@@ -24,10 +24,14 @@ public class PTeID4JIDTest {
   public static void setUpBeforeClass() throws Exception {
 
     logger.info("Testing PTeID4JIDTest...");
+
+    PTeID4JID.init();
   }
 
   @AfterClass
   public static void tearDownAfterClass() throws Exception {
+
+    PTeID4JID.terminate();
 
     logger.info("Done Testing PTeID4JIDTest.");
   }
@@ -43,12 +47,22 @@ public class PTeID4JIDTest {
   }
 
   @Test
-  public void testSurname() throws PteidException {
+  public void getSurname() throws PteidException {
 
     logger.info("Testing PTeID4JIDTest.getSurname()...");
 
     Assert.assertNotNull(PTeID4JID.getSurname());
 
     logger.info("Done Testing PTeID4JIDTest.getSurname().");
+  }
+
+  @Test
+  public void getForename() throws PteidException {
+
+    logger.info("Testing PTeID4JIDTest.getForename()...");
+
+    Assert.assertNotNull(PTeID4JID.getForename());
+
+    logger.info("Done Testing PTeID4JIDTest.getForename().");
   }
 }
