@@ -26,8 +26,8 @@ public class PTeID4JException extends Exception {
    * @param exception
    *          the Exception that triggered the PTeID4J Exception
    */
-  public PTeID4JException(Throwable exception) {
+  public PTeID4JException(Exception exception) {
 
-    super(exception);
+    super(exception.getMessage(), exception.getCause());
   }
 }
