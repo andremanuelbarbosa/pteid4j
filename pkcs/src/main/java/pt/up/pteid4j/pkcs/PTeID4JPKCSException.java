@@ -28,7 +28,7 @@ public class PTeID4JPKCSException extends PTeID4JException {
    * @param exception
    *          the Exception that triggered the PTeID4J PKCS Exception
    */
-  public PTeID4JPKCSException(Throwable exception) {
+  public PTeID4JPKCSException(Exception exception) {
 
     super(exception);
   }
