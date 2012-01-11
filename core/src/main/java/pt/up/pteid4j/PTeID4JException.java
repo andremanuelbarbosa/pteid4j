@@ -19,4 +19,15 @@ public class PTeID4JException extends Exception {
 
     super(message);
   }
+
+  /**
+   * Class Constructor
+   * 
+   * @param exception
+   *          the Exception that triggered the PTeID4J Exception
+   */
+  public PTeID4JException(Throwable exception) {
+
+    super(exception);
+  }
 }
