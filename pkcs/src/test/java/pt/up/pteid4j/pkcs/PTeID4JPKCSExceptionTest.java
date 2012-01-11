@@ -40,14 +40,26 @@ public class PTeID4JPKCSExceptionTest {
   }
 
   @Test
-  public void testConstructor() {
+  public void testNewWithMessage() {
 
     logger.info("Testing PTeID4JPKCSException.PTeID4JPKCSException(Message)...");
 
-    PTeID4JPKCSException pteid4jPKCSException = new PTeID4JPKCSException("JUnit Test Error.");
+    PTeID4JPKCSException pteid4jPKCSException = new PTeID4JPKCSException("JUnit Test.");
     Assert.assertNotNull(pteid4jPKCSException);
-    Assert.assertEquals("JUnit Test Error.", pteid4jPKCSException.getMessage());
+    Assert.assertEquals("JUnit Test.", pteid4jPKCSException.getMessage());
 
     logger.info("Done Testing PTeID4JPKCSException.PTeID4JPKCSException(Message).");
+  }
+
+  @Test
+  public void testNewWithException() {
+
+    logger.info("Testing PTeID4JPKCSException.PTeID4JPKCSException(Exception)...");
+
+    PTeID4JPKCSException pteid4jPKCSException = new PTeID4JPKCSException(new Exception("JUnit Test."));
+    Assert.assertNotNull(pteid4jPKCSException);
+    Assert.assertEquals("JUnit Test.", pteid4jPKCSException.getMessage());
+
+    logger.info("Done Testing PTeID4JPKCSException.PTeID4JPKCSException(Exception).");
   }
 }

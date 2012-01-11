@@ -60,7 +60,7 @@ public final class PTeID4JPKCS {
 
       CK_SLOT_INFO slotInfo = this.pkcs11.C_GetSlotInfo(slotId);
 
-      if ((slotInfo.flags & PKCS11Constants.CKF_TOKEN_PRESENT) != 0) {
+      if ( (slotInfo.flags & PKCS11Constants.CKF_TOKEN_PRESENT) != 0 ) {
 
         CK_TOKEN_INFO tokenInfo;
 
@@ -73,7 +73,7 @@ public final class PTeID4JPKCS {
           continue;
         }
 
-        if (new String(tokenInfo.label).startsWith("CARTAO DE CIDADAO")) {
+        if ( new String(tokenInfo.label).startsWith("CARTAO DE CIDADAO") ) {
 
           this.slotId = slotId;
 
@@ -94,10 +94,11 @@ public final class PTeID4JPKCS {
 
       long[] handles = this.pkcs11.C_FindObjects(session, 2);
 
-      if (handles == null || handles.length == 0) {
+      if ( handles == null || handles.length == 0 ) {
 
         throw new RuntimeException("No Authentication Handle was found.");
-      } else if (handles.length > 1) {
+      }
+      else if ( handles.length > 1 ) {
 
         throw new RuntimeException("More than one Authentication Handle were found.");
       }
@@ -117,7 +118,7 @@ public final class PTeID4JPKCS {
    */
   public static PTeID4JPKCS getInstance() {
 
-    if (instance == null) {
+    if ( instance == null ) {
 
       instance = new PTeID4JPKCS();
     }
@@ -165,10 +166,11 @@ public final class PTeID4JPKCS {
 
       long[] handles = this.pkcs11.C_FindObjects(session, 2);
 
-      if (handles == null || handles.length == 0) {
+      if ( handles == null || handles.length == 0 ) {
 
         throw new RuntimeException("No Signature Handle was found.");
-      } else if (handles.length > 1) {
+      }
+      else if ( handles.length > 1 ) {
 
         throw new RuntimeException("More than one Signature Handle were found.");
       }
@@ -181,47 +183,61 @@ public final class PTeID4JPKCS {
     }
   }
 
-  public byte[] sign(byte[] digest) throws PKCS11Exception {
-
-    long session = this.pkcs11.C_OpenSession(this.slotId, PKCS11Constants.CKF_SERIAL_SESSION, null, null);
+  public byte[] sign(byte[] digest) throws PTeID4JPKCSException {
 
     try {
 
-      CK_MECHANISM mechanism = new CK_MECHANISM();
-      mechanism.mechanism = PKCS11Constants.CKM_SHA1_RSA_PKCS;
-      mechanism.pParameter = null;
-      this.pkcs11.C_SignInit(session, mechanism, this.getSignatureHandle(session));
+      long session = this.pkcs11.C_OpenSession(this.slotId, PKCS11Constants.CKF_SERIAL_SESSION, null, null);
 
-      return this.pkcs11.C_Sign(session, digest);
+      try {
 
-    } finally {
+        CK_MECHANISM mechanism = new CK_MECHANISM();
+        mechanism.mechanism = PKCS11Constants.CKM_SHA1_RSA_PKCS;
+        mechanism.pParameter = null;
+        this.pkcs11.C_SignInit(session, mechanism, this.getSignatureHandle(session));
 
-      this.pkcs11.C_CloseSession(session);
+        return this.pkcs11.C_Sign(session, digest);
+
+      } finally {
+
+        this.pkcs11.C_CloseSession(session);
+      }
+
+    } catch (PKCS11Exception e) {
+
+      throw new PTeID4JPKCSException(e);
     }
   }
 
-  public void validate(byte[] digest, byte[] signature) throws PKCS11Exception {
-
-    long session = this.pkcs11.C_OpenSession(this.slotId, PKCS11Constants.CKF_SERIAL_SESSION, null, null);
+  public void validate(byte[] digest, byte[] signature) throws PTeID4JPKCSException {
 
     try {
 
-      this.pkcs11.C_FindObjectsInit(session, getCKAttributes(PKCS11Constants.CKO_PUBLIC_KEY, "CITIZEN SIGNATURE CERTIFICATE"));
+      long session = this.pkcs11.C_OpenSession(this.slotId, PKCS11Constants.CKF_SERIAL_SESSION, null, null);
 
-      long handle = this.pkcs11.C_FindObjects(session, 1)[0];
+      try {
 
-      this.pkcs11.C_FindObjectsFinal(session);
+        this.pkcs11.C_FindObjectsInit(session, getCKAttributes(PKCS11Constants.CKO_PUBLIC_KEY, "CITIZEN SIGNATURE CERTIFICATE"));
 
-      CK_MECHANISM mechanism = new CK_MECHANISM();
-      mechanism.mechanism = PKCS11Constants.CKM_SHA1_RSA_PKCS;
-      mechanism.pParameter = null;
-      this.pkcs11.C_VerifyInit(session, mechanism, handle);
+        long handle = this.pkcs11.C_FindObjects(session, 1)[0];
 
-      this.pkcs11.C_Verify(session, digest, signature);
+        this.pkcs11.C_FindObjectsFinal(session);
 
-    } finally {
+        CK_MECHANISM mechanism = new CK_MECHANISM();
+        mechanism.mechanism = PKCS11Constants.CKM_SHA1_RSA_PKCS;
+        mechanism.pParameter = null;
+        this.pkcs11.C_VerifyInit(session, mechanism, handle);
 
-      this.pkcs11.C_CloseSession(session);
+        this.pkcs11.C_Verify(session, digest, signature);
+
+      } finally {
+
+        this.pkcs11.C_CloseSession(session);
+      }
+
+    } catch (PKCS11Exception e) {
+
+      throw new PTeID4JPKCSException(e);
     }
   }
 }
