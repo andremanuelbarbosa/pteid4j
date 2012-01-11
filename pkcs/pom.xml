@@ -7,11 +7,11 @@
 		<version>0.1.0</version>
 		<relativePath>../</relativePath>
 	</parent>
-	<name>PTeID4J ID</name>
+	<name>PTeID4J PKCS11</name>
 	<groupId>pt.up.pteid4j</groupId>
-	<artifactId>pteid4j-id</artifactId>
-	<description>Portuguese e-ID for Java ID</description>
-	<version>0.1.0-SNAPSHOT</version>
+	<artifactId>pteid4j-pkcs</artifactId>
+	<description>Portuguese e-ID for Java PKCS</description>
+	<version>${project.parent.version}-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<inceptionYear>2012</inceptionYear>
 
@@ -34,22 +34,9 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.7</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.16</version>
-		</dependency>
-
-		<dependency>
-      <groupId>pteidlibj</groupId>
-      <artifactId>pteidlibj</artifactId>
-      <version>1.0</version>
+      <groupId>pt.up.pteid4j</groupId>
+      <artifactId>pteid4j</artifactId>
+      <version>${project.version}</version>
     </dependency>
 	</dependencies>
 
