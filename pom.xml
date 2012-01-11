@@ -13,8 +13,18 @@
     <developer>
       <name>Andre Barbosa</name>
       <email>andremanuelbarbosa@gmail.com</email>
+      <url>http://www.andremanuelbarbosa.com/</url>
     </developer>
   </developers>
+
+  <organization>
+    <name>Universidade do Porto</name>
+    <url>http://www.up.pt/</url>
+  </organization>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
 
   <dependencies>
     <dependency>
@@ -22,6 +32,12 @@
       <artifactId>junit</artifactId>
       <version>4.7</version>
       <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.16</version>
     </dependency>
   </dependencies>
 </project>
