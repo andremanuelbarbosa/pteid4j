@@ -35,6 +35,43 @@
     <developerConnection>scm:git:git://github.com/andremanuelbarbosa/pteid4j.git</developerConnection>
   </scm>
 
+  <repositories>
+    <repository>
+      <id>andremanuelbarbosa-cloudbees-release</id>
+      <url>dav:https://repository-andremanuelbarbosa.forge.cloudbees.com/release/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+
+    <repository>
+      <id>andremanuelbarbosa-cloudbees-snapshot</id>
+      <url>dav:https://repository-andremanuelbarbosa.forge.cloudbees.com/snapshot/</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
+  <distributionManagement>
+    <downloadUrl>https://github.com/andremanuelbarbosa/pteid4j</downloadUrl>
+    <repository>
+      <id>andremanuelbarbosa-cloudbees-release</id>
+      <url>dav:https://repository-andremanuelbarbosa.forge.cloudbees.com/release/</url>
+    </repository>
+
+    <snapshotRepository>
+      <id>andremanuelbarbosa-cloudbees-snapshot</id>
+      <url>dav:https://repository-andremanuelbarbosa.forge.cloudbees.com/snapshot/</url>
+    </snapshotRepository>
+  </distributionManagement>
+
   <properties>
     <!-- Logging -->
     <slf4j.version>1.7.5</slf4j.version>
