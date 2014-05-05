@@ -1,12 +1,13 @@
 package pt.up.pteid4j;
 
-import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pteidlib.PTEID_ADDR;
 import pteidlib.PTEID_ID;
@@ -19,18 +20,18 @@ import pteidlib.PteidException;
  */
 public class PTeID4JTest {
 
-  private static Logger logger = Logger.getLogger(PTeID4J.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(PTeID4J.class);
 
   @BeforeClass
   public static void setUpBeforeClass() throws Exception {
 
-    logger.info("Testing PTeID4J...");
+    LOGGER.info("Testing PTeID4J...");
   }
 
   @AfterClass
   public static void tearDownAfterClass() throws Exception {
 
-    logger.info("Done Testing PTeID4J.");
+    LOGGER.info("Done Testing PTeID4J.");
   }
 
   @Before
@@ -46,26 +47,26 @@ public class PTeID4JTest {
   @Test
   public void testAddress() throws PteidException {
 
-    logger.info("Testing PTeID4J.getAddress()...");
+    LOGGER.info("Testing PTeID4J.getAddress()...");
 
     PTEID_ADDR address = PTeID4J.getAddress();
 
     Assert.assertNotNull(address);
     Assert.assertNotNull(address.addrType);
 
-    logger.info("Done Testing PTeID4J.getAddress().");
+    LOGGER.info("Done Testing PTeID4J.getAddress().");
   }
 
   @Test
   public void testId() throws PteidException {
 
-    logger.info("Testing PTeID4J.getId()...");
+    LOGGER.info("Testing PTeID4J.getId()...");
 
     PTEID_ID id = PTeID4J.getId();
 
     Assert.assertNotNull(id);
     Assert.assertNotNull(id.name);
 
-    logger.info("Done Testing PTeID4J.getId().");
+    LOGGER.info("Done Testing PTeID4J.getId().");
   }
 }

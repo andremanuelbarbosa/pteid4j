@@ -1,4 +1,8 @@
 
 MAVEN
 
-> mvn install:install-file -DgroupId=pteidlibj -DartifactId=pteidlibj -Dversion=1.0 -Dfile=lib/pteidlibj.jar -Dpackaging=jar -DgeneratePom=true
+mvn install:install-file -DgroupId=pteidlibj -DartifactId=pteidlibj -Dversion=1.0 -Dfile=pteidlibj.jar -Dpackaging=jar -DgeneratePom=true
+
+mvn deploy:deploy-file repositoryId=andremanuelbarbosa-cloudbees-release-repo -DgroupId=pteidlibj -DartifactId=pteidlibj -Dversion=1.0 -Dfile=core/lib/pteidlibj.jar -Dpackaging=jar -DgeneratePom=true -Durl=dav:https://repository-andremanuelbarbosa.forge.cloudbees.com/release/
+
+mvn deploy:deploy-file repositoryId=andremanuelbarbosa-cloudbees-release-repo -DgroupId=pteidlibj -DartifactId=pteidlibj -Dversion=1.0 -Dfile=pteidlibj.jar -Dpackaging=jar -DgeneratePom=true -Durl=dav:https://repository-andremanuelbarbosa.forge.cloudbees.com/release/

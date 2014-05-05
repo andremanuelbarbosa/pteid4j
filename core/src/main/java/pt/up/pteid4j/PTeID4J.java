@@ -1,6 +1,7 @@
 package pt.up.pteid4j;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.up.pteid4j.pkcs11.PTeID4JPKCS11;
 import pteidlib.PTEID_ADDR;
@@ -16,11 +17,11 @@ import pteidlib.pteid;
  */
 public final class PTeID4J {
 
-  private static Logger logger = Logger.getLogger(PTeID4J.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(PTeID4J.class);
 
   static {
 
-    logger.debug("PTeID4J");
+    LOGGER.debug("PTeID4J");
 
     try {
 
@@ -68,7 +69,7 @@ public final class PTeID4J {
 
     for (int i = 0; i < certificates.length; i++) {
 
-      if ( certificates[i].certifLabel.equals(label) ) {
+      if (certificates[i].certifLabel.equals(label)) {
 
         return certificates[i];
       }

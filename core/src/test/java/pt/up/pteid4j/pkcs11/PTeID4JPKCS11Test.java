@@ -2,16 +2,16 @@ package pt.up.pteid4j.pkcs11;
 
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.up.pteid4j.PTeID4JUtils;
-
 import sun.security.pkcs11.wrapper.PKCS11Exception;
 
 /**
@@ -21,18 +21,18 @@ import sun.security.pkcs11.wrapper.PKCS11Exception;
  */
 public class PTeID4JPKCS11Test {
 
-  private static Logger logger = Logger.getLogger(PTeID4JPKCS11Test.class);
+  private static Logger LOGGER = LoggerFactory.getLogger(PTeID4JPKCS11Test.class);
 
   @BeforeClass
   public static void setUpBeforeClass() throws Exception {
 
-    logger.info("Testing PTeID4JPKCS11...");
+    LOGGER.info("Testing PTeID4JPKCS11...");
   }
 
   @AfterClass
   public static void tearDownAfterClass() throws Exception {
 
-    logger.info("Done Testing PTeID4JPKCS11.");
+    LOGGER.info("Done Testing PTeID4JPKCS11.");
   }
 
   @Before
@@ -48,7 +48,7 @@ public class PTeID4JPKCS11Test {
   @Test
   public void testSign() throws IOException, PKCS11Exception {
 
-    logger.info("Testing PTeID4JPKCS11.sign()...");
+    LOGGER.info("Testing PTeID4JPKCS11.sign()...");
 
     byte[] signature = PTeID4JPKCS11.getInstance().sign("PTeID4J".getBytes());
 
@@ -59,13 +59,13 @@ public class PTeID4JPKCS11Test {
     Assert.assertEquals(128, signature.length);
     Assert.assertEquals(signatureHex, PTeID4JUtils.toHexString(signature));
 
-    logger.info("Done Testing PTeID4JPKCS11.sign().");
+    LOGGER.info("Done Testing PTeID4JPKCS11.sign().");
   }
 
   @Test
   public void testValidate() throws IOException, PKCS11Exception {
 
-    logger.info("Testing PTeID4JPKCS11.validate()...");
+    LOGGER.info("Testing PTeID4JPKCS11.validate()...");
 
     byte[] signature = PTeID4JPKCS11.getInstance().sign("PTeID4J".getBytes());
 
@@ -74,6 +74,6 @@ public class PTeID4JPKCS11Test {
 
     PTeID4JPKCS11.getInstance().validate("PTeID4J".getBytes(), signature);
 
-    logger.info("Done Testing PTeID4JPKCS11.validate().");
+    LOGGER.info("Done Testing PTeID4JPKCS11.validate().");
   }
 }
