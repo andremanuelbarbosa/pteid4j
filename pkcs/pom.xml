@@ -9,7 +9,7 @@
   </parent>
   <artifactId>pteid4j-pkcs</artifactId>
   <packaging>jar</packaging>
-  <name>PTeID4J PKCS11</name>
+  <name>PTeID4J PKCS</name>
   <description>Portuguese e-ID for Java PKCS</description>
   <inceptionYear>2012</inceptionYear>
 
