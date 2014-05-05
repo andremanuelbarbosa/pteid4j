@@ -1,12 +1,13 @@
 package pt.up.pteid4j.pkcs;
 
-import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Test class for {@link pt.up.pteid4j.pkcs.PTeID4JPKCSException}
@@ -15,18 +16,18 @@ import org.junit.Test;
  */
 public class PTeID4JPKCSExceptionTest {
 
-  private static Logger logger = Logger.getLogger(PTeID4JPKCSExceptionTest.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(PTeID4JPKCSExceptionTest.class);
 
   @BeforeClass
   public static void setUpBeforeClass() throws Exception {
 
-    logger.info("Testing PTeID4JPKCSException...");
+    LOGGER.info("Testing PTeID4JPKCSException...");
   }
 
   @AfterClass
   public static void tearDownAfterClass() throws Exception {
 
-    logger.info("Done Testing PTeID4JPKCSException.");
+    LOGGER.info("Done Testing PTeID4JPKCSException.");
   }
 
   @Before
@@ -40,32 +41,35 @@ public class PTeID4JPKCSExceptionTest {
   }
 
   /**
-   * Test method for {@link pt.up.pteid4j.pkcs.PTeID4JPKCSException#PTeID4JPKCSException(java.lang.String)}
+   * Test method for
+   * {@link pt.up.pteid4j.pkcs.PTeID4JPKCSException#PTeID4JPKCSException(java.lang.String)}
    */
   @Test
   public void testNewWithMessage() {
 
-    logger.info("Testing PTeID4JPKCSException#PTeID4JPKCSException(java.lang.String)...");
+    LOGGER.info("Testing PTeID4JPKCSException#PTeID4JPKCSException(java.lang.String)...");
 
     PTeID4JPKCSException pteid4jPKCSException = new PTeID4JPKCSException("JUnit Test.");
     Assert.assertNotNull(pteid4jPKCSException);
     Assert.assertEquals("JUnit Test.", pteid4jPKCSException.getMessage());
 
-    logger.info("Done Testing PTeID4JPKCSException#PTeID4JPKCSException(java.lang.String).");
+    LOGGER.info("Done Testing PTeID4JPKCSException#PTeID4JPKCSException(java.lang.String).");
   }
 
   /**
-   * Test method for {@link pt.up.pteid4j.pkcs.PTeID4JPKCSException#PTeID4JPKCSException(java.lang.Exception)}
+   * Test method for
+   * {@link pt.up.pteid4j.pkcs.PTeID4JPKCSException#PTeID4JPKCSException(java.lang.Exception)}
    */
   @Test
   public void testNewWithException() {
 
-    logger.info("Testing PTeID4JPKCSException#PTeID4JPKCSException(java.lang.Exception)...");
+    LOGGER.info("Testing PTeID4JPKCSException#PTeID4JPKCSException(java.lang.Exception)...");
 
-    PTeID4JPKCSException pteid4jPKCSException = new PTeID4JPKCSException(new Exception("JUnit Test."));
+    PTeID4JPKCSException pteid4jPKCSException = new PTeID4JPKCSException(new Exception(
+        "JUnit Test."));
     Assert.assertNotNull(pteid4jPKCSException);
     Assert.assertEquals("JUnit Test.", pteid4jPKCSException.getMessage());
 
-    logger.info("Done Testing PTeID4JPKCSException#PTeID4JPKCSException(java.lang.Exception).");
+    LOGGER.info("Done Testing PTeID4JPKCSException#PTeID4JPKCSException(java.lang.Exception).");
   }
 }

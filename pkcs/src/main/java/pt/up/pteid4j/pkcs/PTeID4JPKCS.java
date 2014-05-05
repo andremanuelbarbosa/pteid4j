@@ -2,7 +2,8 @@ package pt.up.pteid4j.pkcs;
 
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import sun.security.pkcs11.wrapper.CK_ATTRIBUTE;
 import sun.security.pkcs11.wrapper.CK_MECHANISM;
@@ -19,7 +20,7 @@ import sun.security.pkcs11.wrapper.PKCS11Exception;
  */
 public final class PTeID4JPKCS {
 
-  private static Logger logger = Logger.getLogger(PTeID4JPKCS.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(PTeID4JPKCS.class);
 
   private static PTeID4JPKCS instance;
 
@@ -60,7 +61,7 @@ public final class PTeID4JPKCS {
 
       CK_SLOT_INFO slotInfo = this.pkcs11.C_GetSlotInfo(slotId);
 
-      if ( (slotInfo.flags & PKCS11Constants.CKF_TOKEN_PRESENT) != 0 ) {
+      if ((slotInfo.flags & PKCS11Constants.CKF_TOKEN_PRESENT) != 0) {
 
         CK_TOKEN_INFO tokenInfo;
 
@@ -73,11 +74,11 @@ public final class PTeID4JPKCS {
           continue;
         }
 
-        if ( new String(tokenInfo.label).startsWith("CARTAO DE CIDADAO") ) {
+        if (new String(tokenInfo.label).startsWith("CARTAO DE CIDADAO")) {
 
           this.slotId = slotId;
 
-          logger.debug("Portuguese Citizen Card Reader found in Slot " + this.slotId + ".");
+          LOGGER.debug("Portuguese Citizen Card Reader found in Slot " + this.slotId + ".");
 
           break;
         }
@@ -90,15 +91,15 @@ public final class PTeID4JPKCS {
 
     try {
 
-      this.pkcs11.C_FindObjectsInit(session, getCKAttributes(PKCS11Constants.CKO_PRIVATE_KEY, "CITIZEN AUTHENTICATION KEY"));
+      this.pkcs11.C_FindObjectsInit(session,
+          getCKAttributes(PKCS11Constants.CKO_PRIVATE_KEY, "CITIZEN AUTHENTICATION KEY"));
 
       long[] handles = this.pkcs11.C_FindObjects(session, 2);
 
-      if ( handles == null || handles.length == 0 ) {
+      if (handles == null || handles.length == 0) {
 
         throw new RuntimeException("No Authentication Handle was found.");
-      }
-      else if ( handles.length > 1 ) {
+      } else if (handles.length > 1) {
 
         throw new RuntimeException("More than one Authentication Handle were found.");
       }
@@ -118,7 +119,7 @@ public final class PTeID4JPKCS {
    */
   public static PTeID4JPKCS getInstance() {
 
-    if ( instance == null ) {
+    if (instance == null) {
 
       instance = new PTeID4JPKCS();
     }
@@ -162,15 +163,15 @@ public final class PTeID4JPKCS {
 
     try {
 
-      this.pkcs11.C_FindObjectsInit(session, getCKAttributes(PKCS11Constants.CKO_PRIVATE_KEY, "CITIZEN SIGNATURE KEY"));
+      this.pkcs11.C_FindObjectsInit(session,
+          getCKAttributes(PKCS11Constants.CKO_PRIVATE_KEY, "CITIZEN SIGNATURE KEY"));
 
       long[] handles = this.pkcs11.C_FindObjects(session, 2);
 
-      if ( handles == null || handles.length == 0 ) {
+      if (handles == null || handles.length == 0) {
 
         throw new RuntimeException("No Signature Handle was found.");
-      }
-      else if ( handles.length > 1 ) {
+      } else if (handles.length > 1) {
 
         throw new RuntimeException("More than one Signature Handle were found.");
       }
@@ -187,7 +188,8 @@ public final class PTeID4JPKCS {
 
     try {
 
-      long session = this.pkcs11.C_OpenSession(this.slotId, PKCS11Constants.CKF_SERIAL_SESSION, null, null);
+      long session = this.pkcs11.C_OpenSession(this.slotId, PKCS11Constants.CKF_SERIAL_SESSION,
+          null, null);
 
       try {
 
@@ -213,11 +215,13 @@ public final class PTeID4JPKCS {
 
     try {
 
-      long session = this.pkcs11.C_OpenSession(this.slotId, PKCS11Constants.CKF_SERIAL_SESSION, null, null);
+      long session = this.pkcs11.C_OpenSession(this.slotId, PKCS11Constants.CKF_SERIAL_SESSION,
+          null, null);
 
       try {
 
-        this.pkcs11.C_FindObjectsInit(session, getCKAttributes(PKCS11Constants.CKO_PUBLIC_KEY, "CITIZEN SIGNATURE CERTIFICATE"));
+        this.pkcs11.C_FindObjectsInit(session,
+            getCKAttributes(PKCS11Constants.CKO_PUBLIC_KEY, "CITIZEN SIGNATURE CERTIFICATE"));
 
         long handle = this.pkcs11.C_FindObjects(session, 1)[0];
 

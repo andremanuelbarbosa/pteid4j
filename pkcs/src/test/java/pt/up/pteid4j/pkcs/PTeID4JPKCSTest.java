@@ -2,13 +2,14 @@ package pt.up.pteid4j.pkcs;
 
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.up.pteid4j.PTeID4JUtils;
 
@@ -19,18 +20,18 @@ import pt.up.pteid4j.PTeID4JUtils;
  */
 public class PTeID4JPKCSTest {
 
-  private static Logger logger = Logger.getLogger(PTeID4JPKCSTest.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(PTeID4JPKCSTest.class);
 
   @BeforeClass
   public static void setUpBeforeClass() throws Exception {
 
-    logger.info("Testing PTeID4JPKCS...");
+    LOGGER.info("Testing PTeID4JPKCS...");
   }
 
   @AfterClass
   public static void tearDownAfterClass() throws Exception {
 
-    logger.info("Done Testing PTeID4JPKCS.");
+    LOGGER.info("Done Testing PTeID4JPKCS.");
   }
 
   @Before
@@ -46,7 +47,7 @@ public class PTeID4JPKCSTest {
   @Test
   public void testSign() throws IOException, PTeID4JPKCSException {
 
-    logger.info("Testing PTeID4JPKCS.sign()...");
+    LOGGER.info("Testing PTeID4JPKCS.sign()...");
 
     byte[] signature = PTeID4JPKCS.getInstance().sign("PTeID4J".getBytes());
 
@@ -57,13 +58,13 @@ public class PTeID4JPKCSTest {
     Assert.assertEquals(128, signature.length);
     Assert.assertEquals(signatureHex, PTeID4JUtils.toHexString(signature));
 
-    logger.info("Done Testing PTeID4JPKCS.sign().");
+    LOGGER.info("Done Testing PTeID4JPKCS.sign().");
   }
 
   @Test
   public void testValidate() throws IOException, PTeID4JPKCSException {
 
-    logger.info("Testing PTeID4JPKCS.validate()...");
+    LOGGER.info("Testing PTeID4JPKCS.validate()...");
 
     byte[] signature = PTeID4JPKCS.getInstance().sign("PTeID4J".getBytes());
 
@@ -72,6 +73,6 @@ public class PTeID4JPKCSTest {
 
     PTeID4JPKCS.getInstance().validate("PTeID4J".getBytes(), signature);
 
-    logger.info("Done Testing PTeID4JPKCS.validate().");
+    LOGGER.info("Done Testing PTeID4JPKCS.validate().");
   }
 }
