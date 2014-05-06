@@ -25,7 +25,28 @@ public final class PTeID4J {
 
     try {
 
-      System.loadLibrary("pteidlibj");
+      String osName = PTeID4JUtils.getOSName();
+
+      LOGGER.info("Operating System is {}.", osName);
+
+      if (osName.equals(PTeID4JUtils.OS_LINUX)) {
+
+        try {
+
+          LOGGER.debug("Loading the PTeID lib from {}...", "/usr/local/lib/libpteidlibj.so");
+
+          System.load("/usr/local/lib/libpteidlibj.so");
+
+        } catch (UnsatisfiedLinkError unsatisfiedLinkErrorLinux01) {
+
+          LOGGER.debug("Loading the PTeID lib from {}...",
+              "/usr/local/lib/pteid_jni/libpteidlibj.so");
+
+          System.load("/usr/local/lib/pteid_jni/libpteidlibj.so");
+        }
+      }
+
+      // System.loadLibrary("pteidlibj");
 
       // System.loadLibrary("pteidpkcs11");
 

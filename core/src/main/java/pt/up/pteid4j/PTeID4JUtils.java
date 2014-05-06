@@ -12,7 +12,10 @@ import java.io.InputStream;
  */
 public abstract class PTeID4JUtils {
 
-  private static char[] HEXES = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+  static final String OS_LINUX = "Linux";
+
+  private static final char[] HEXES = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B',
+      'C', 'D', 'E', 'F' };
 
   /**
    * Returns the Name of the Operating System
@@ -65,7 +68,7 @@ public abstract class PTeID4JUtils {
 
       int c = bytes[i];
 
-      if ( c < 0 ) {
+      if (c < 0) {
 
         c += 256;
       }
